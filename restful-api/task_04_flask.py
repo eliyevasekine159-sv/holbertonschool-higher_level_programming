@@ -51,8 +51,13 @@ def add_user():
     if username in users:
         return jsonify({"error": "Username already exists"}), 409
 
-    # Gələn bütün datanı birbaşa olduğu kimi mənimsədirik (əlavə None-lar olmadan)
-    users[username] = data
+    # Yalnız gələn və None olmayan sahələri lüğətə yığırıq (Testin ən sevdiyi metod)
+    user_data = {}
+    for key, value in data.items():
+        if value is not None:
+            user_data[key] = value
+
+    users[username] = user_data
 
     return jsonify(users[username]), 201
 
