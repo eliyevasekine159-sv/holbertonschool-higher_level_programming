@@ -6,7 +6,7 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-# İn-memory (yaddaşda) istifadəçi datalarını saxlamaq üçün lüğət (dictionary)
+# İn-memory (yaddaşda) istifadəçi datalarını saxlamaq üçün lüğət
 users = {}
 
 
@@ -40,7 +40,6 @@ def get_user(username):
 @app.route("/add_user", methods=["POST"])
 def add_user():
     """Adds a new user to the system with strict JSON and field validation"""
-    # Gələn datanın JSON olub-olmamasını və düzgünlüyünü yoxlayırıq
     data = request.get_json(silent=True)
     if data is None:
         return jsonify({"error": "Invalid JSON"}), 400
@@ -52,13 +51,8 @@ def add_user():
     if username in users:
         return jsonify({"error": "Username already exists"}), 409
 
-    # İstifadəçini yaddaşa qeyd edirik
-    users[username] = {
-        "username": username,
-        "name": data.get("name"),
-        "age": data.get("age"),
-        "city": data.get("city")
-    }
+    # Gələn bütün datanı birbaşa olduğu kimi mənimsədirik (əlavə None-lar olmadan)
+    users[username] = data
 
     return jsonify(users[username]), 201
 
