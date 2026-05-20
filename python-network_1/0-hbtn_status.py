@@ -1,14 +1,10 @@
 #!/usr/bin/python3
-"""Fetches status URL using urllib with dynamic argument option"""
-import sys
+"""Fetches https://intranet.hbtn.io/status using urllib package only"""
 import urllib.request
 
 
 if __name__ == "__main__":
     url = "https://intranet.hbtn.io/status"
-    if len(sys.argv) > 1:
-        url = sys.argv[1]
-
     req = urllib.request.Request(url)
     with urllib.request.urlopen(req) as response:
         html = response.read()
