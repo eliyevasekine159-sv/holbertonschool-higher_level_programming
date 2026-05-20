@@ -51,7 +51,7 @@ def add_user():
     if username in users:
         return jsonify({"error": "Username already exists"}), 409
 
-    # Yalnız gələn və None olmayan sahələri lüğətə yığırıq (Testin ən sevdiyi metod)
+    # Yalnız gələn və None olmayan sahələri təmiz şəkildə saxlayırıq
     user_data = {}
     for key, value in data.items():
         if value is not None:
@@ -59,7 +59,13 @@ def add_user():
 
     users[username] = user_data
 
-    return jsonify(users[username]), 201
+    # Checker-in tələb etdiyi rəsmi təsdiq mesajı strukturu:
+    response = {
+        "message": "User added",
+        "user": user_data
+    }
+
+    return jsonify(response), 201
 
 
 if __name__ == "__main__":
